@@ -20,7 +20,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut current_span = 10.0;
 
-    println!{"Mandelbrot zoom. Resolution {:?}, centre coordinate {}", pixel_dimensions, centre_point};
+    println!{"Mandelbrot zoom. Threads: {}, Resolution {:?}, Centre coordinate {}", num_cpus::get(), pixel_dimensions, centre_point};
 
     for i in 0 .. zoom_steps {
         
@@ -43,7 +43,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 fn render_image(bounds: (usize, usize), upper_left: Complex64, lower_right: Complex64, iterations: &u64, filename: &str) -> Result<(), Box<dyn std::error::Error>> {
 
     let mut pixels: Vec<Vec<u8>> = vec![vec![0,0,0]; bounds.0 * bounds.1 * 3];
-    let threads = 8;
+    let threads = num_cpus::get();
     let rows_per_band = bounds.1 / threads + 1;
 
     
@@ -178,5 +178,5 @@ fn test_parse_complex() {
 
 #[test]
 fn test_pixel_to_point() {
-    assert_eq!(pixel_to_point((100,100), (25, 75), Complex64::new(-1.0, 1.0), Complex::new(1.0, -1.0)), Complex64::new(-0.5, -0.5));
+    assert_eq!(pixel_to_point((100,100), (25, 75), Complex64::new(-1.0, 1.0), Complex64::new(1.0, -1.0)), Complex64::new(-0.5, -0.5));
 }

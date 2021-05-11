@@ -208,6 +208,7 @@ dependencies = [
  "crossbeam",
  "image",
  "num-complex",
+ "num_cpus",
 ]
 
 [[package]]
